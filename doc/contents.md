@@ -1,7 +1,9 @@
+Documentation for Cocaine v0.11
+
 #Contents
   * [General info](general_info.md)
   * Tutorials
-    * Cocaine install(tutorial_cocaine_install.md)
+    * [Cocaine install](tutorial_cocaine_install.md)
     * [Python service and client app](https://github.com/cocaine/cocaine-framework-python/wiki/Echo-application-example)
     * [Node.js service](https://github.com/cocaine/cocaine-framework-nodejs/blob/development/README.md)
     * [C++ service and client app](tutorial_cplusplus.md)
