@@ -24,7 +24,7 @@ The minimalistic working configuration looks like follows:
             "type": "logging"
         },
         "storage": {
-            "type": "storage",
+            "type": "storage"
         },
     },
     "storages": {
@@ -78,7 +78,7 @@ Defaults:
 | Parameter | Description |
 |-----------|-------------|
 | plugins | Path to plugin libs (services, storages, loggers etc.). |
-| runtime | Path to the pid-file of the process. |
+| runtime | Path to the pid-file of the process and UNIX-domain-sockets to communicate with workers |
 
 
 ##Locator
@@ -141,7 +141,7 @@ Defaults:
 | weight | Weight of the node. By default all Cocaine nodes have weight 1.|
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice.|
 
-When using `ipvs`-gateway, you should be shure that `ip_vs` module is loaded into your Linux kernel.
+When using `ipvs`-gateway, you should be sure that `ip_vs` module is loaded into your Linux kernel.
 ##Services
 
 Defaults:
@@ -152,7 +152,7 @@ Defaults:
         "type": "logging"
     },
     "storage": {
-        "type": "storage",
+        "type": "storage"
     },
     "node": {
         "type": "node",
@@ -179,7 +179,7 @@ Service `logging` can use any logger configured in [loggers](#loggers) section. 
 
 ```
 "logging": {
-    "type": "logging"
+    "type": "logging",
     "args": {
         "backend": "core"
     }
@@ -192,7 +192,7 @@ Service `storage` can use any backend configured in [storages](#storages) sectio
 
 ```
 "storage": {
-    "type": "storage"
+    "type": "storage",
     "args": {
         "backend": "core"
     }
