@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
     //other code
 }
 ```
-`endpoint` is a binding address for local `manager` instance.
+`endpoint` is and address of Locator service.
 
 After creating `service_manager` client can get manager object for any app that it need
 
@@ -357,7 +357,7 @@ To determine whether all data ready, `ready` call of the `future` object can be 
 ###App and services types
 All calls from the client are provided by `service_t` template class, this interface is quite complicated to raise a desire to simplify it. For the purpose of simplification, interfaces to ordinary app and core services are developed as wrappers for `service_t`.
 
-![Core stubs](core_client_stubs.png)
+![Core stubs](images/core_client_stubs.png)
 
 | Stub | Description |
 |------|-------------|
