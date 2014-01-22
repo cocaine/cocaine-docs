@@ -89,7 +89,6 @@ Defaults:
 "locator": {
     "hostname": "",
     "endpoint": "::",
-    "port": "10053",
     "port-range": ""
 }
 ```
@@ -98,9 +97,7 @@ Defaults:
 |-----------|-------------|
 | hostname | Local hostname which will be used for Locator publishing. Resolved with the system calls by default. |
 | endpoint | Bind address. Can be specified as a hostname or an address. Locator is bound to all interfaces by default.|
-| port | Port of the service. |
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice. |
-
 
 ##Network
 

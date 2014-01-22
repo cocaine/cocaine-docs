@@ -9,10 +9,10 @@ Documentation for Cocaine v0.11
     * [C++ service and client app](tutorial_cplusplus.md)
     * Go
     * [Java client app](https://github.com/cocaine/cocaine-framework-java/blob/master/README.md)
-  * Server maintanance
-    * [Server deployment](maintanance_server_deployment.md)
-    * [Server configuration](maintanance_server_configuration.md)
-  * [App maintanance](app_maintanance.md)
+  * Server maintenance
+    * [Server deployment](maintenance_server_deployment.md)
+    * [Server configuration](maintenance_server_configuration.md)
+  * [App maintenance](app_maintenance.md)
   * [API](api.md)
     * [C++](api_cplusplus.md)
     * [Python](https://cocaine.readthedocs.org/en/latest/)

@@ -6,7 +6,9 @@ The first thing that you need is to get sources from the github.
 ```
 #This repository contains cocaine-runtime server
 git clone https://github.com/cocaine/cocaine-core.git -b v0.11
+cd cocaine-core
 git submodule update --init
+cd ..
 
 #Here is the console command that required to install custom applications into the cloud
 git clone https://github.com/cocaine/cocaine-tools.git -b v0.11
@@ -27,7 +29,7 @@ The next step is to compile projects and install them.
 
 ```
 sudo aptitude install equivs devscripts
-sudo aptitude install python-pip
+sudo aptitude install python-pip python-dev
 pip install setuptools
 
 cd cocaine-core
@@ -38,7 +40,7 @@ cd ..
 sudo dpkg -i cocaine-dbg_*_amd64.deb cocaine-runtime_*_amd64.deb libcocaine-core2_*_amd64.deb libcocaine-dev_*_amd64.deb
 
 cd cocaine-tools
-python setup.py install
+sudo python setup.py install
 
 cd cocaine-framework-native
 debuild -sa
@@ -47,7 +49,7 @@ sudo dpkg -i cocaine-framework-native_*_amd64.deb cocaine-framework-native-dbg_*
 cocaine-framework-native-dev_*_amd64.deb
 
 cd cocaine-framework-python
-python setup.py install
+sudo python setup.py install
 cd ..
 
 cd cocaine-framework-java
@@ -72,17 +74,17 @@ If you want to start it manually use the command
 $cocaine-runtime -c /etc/cocaine/cocaine-default.cfg
 ```
 
-If you need to build Cocaine components from sourced use corresponding [guide](maintanace_cocaine_deployment.md).
+If you need to build Cocaine components from sourced use corresponding [guide](maintenace_cocaine_deployment.md).
 
-Description of `cocaine-runtime` configuration parameters you can find in [maintenance section](maintanance_server_configuration.md).
+Description of `cocaine-runtime` configuration parameters you can find in [maintenance section](maintenance_server_configuration.md).
 
 While experimenting with Cocain it is usefull to toggle off caching. It can be done by deleting of `cache` configuration from the `storages` section of the configuration file.
 
 Now you can create your applications and run them under Cocaine. To do this, check tutorials:
-    * [Python](https://github.com/cocaine/cocaine-framework-python/wiki/Echo-application-example)
-    * [Node.js](https://github.com/cocaine/cocaine-framework-nodejs/blob/development/README.md)
-    * [C++](tutorial_cplusplus.md)
-    * Go
-    * Java
+  * [Python](https://github.com/cocaine/cocaine-framework-python/wiki/Echo-application-example)
+  * [Node.js](https://github.com/cocaine/cocaine-framework-nodejs/blob/development/README.md)
+  * [C++](tutorial_cplusplus.md)
+  * Go
+  * Java
 
 [Back to Contents](contents.md)
