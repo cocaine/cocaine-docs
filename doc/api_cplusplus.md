@@ -13,7 +13,7 @@ General approach to develop apps is to implement some handler classes and regist
 ###Handlers
 Handlers contain functions, which called on client events and data. They should be derivatives from `handler` defined in `handler.hpp`. Also constructor of a handler should accept reference to instance of application.
 
-```C++
+```cpp
 #include <cocaine/framework/handler.hpp>
 
 class custom_app;
@@ -421,4 +421,55 @@ This stub contains the only function `emit`, but it will be better to use macros
 Example of `logging_service_t` usage you can find in [C++ tutorial](tutorial_cplusplus.md)
 
 ###Client example
-Let's write a simple client to calculator app [example](#app-example)
+Let's write a simple client to [calculator app example](#app-example). [Source of a client](code_examples/api_cplusplus_calculator_client.cpp).
+
+```cpp
+#include <cocaine/framework/services/app.hpp>
+#include <iostream>
+
+namespace cf = cocaine::framework;
+
+int
+main(int argc, char *argv[]) {
+    auto manager = cf::service_manager_t::create(cf::service_manager_t::endpoint_t("127.0.0.1", 10053));
+
+    auto app = manager->get_service<cf::app_service_t>("calculator");
+
+    auto get = app->enqueue("get_value", 0);
+
+    try {
+        // g.next() wait answer from app in blocking mode.
+        std::cout << "Value: " << cf::unpack<int>(get.next()) << std::endl;
+    } catch(const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+
+    auto add = app->enqueue("add", 10);
+
+    try{
+        add.next();
+    } catch(cf::future_error const &e){
+        if( e.code()==cf::future_errc::stream_closed ){
+            std::cout<<"Data transmitted, stream closed\n";
+        }
+    }
+
+    get = app->enqueue("get_value", 0);
+
+    try {
+        // g.next() wait answer from app in blocking mode.
+        std::cout << "Value: " << cf::unpack<int>(get.next()) << std::endl;
+    } catch(const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+
+    return 0;
+}
+```
+
+Complile it with the next command:
+```bash
+g++ client.cpp -o calculator_client -std=c++0x -lcocaine-framework -lmsgpack -lev -lboost_program_options -lboost_thread-mt -lboost_system
+```
