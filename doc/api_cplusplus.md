@@ -10,6 +10,10 @@ C++ Cocaine app is an executable that will be started by `Node` service as a sep
 
 General approach to develop apps is to implement some handler classes and register them by `dispatch_t::on()`-call.
 
+  * [Handlers](#handlers)
+  * [App](#app)
+  * [Example](#app-example)
+
 ###Handlers
 Handlers contain functions, which called on client events and data. They should be derivatives from `handler` defined in `handler.hpp`. Also constructor of a handler should accept reference to instance of application.
 
@@ -54,25 +58,42 @@ std::string data_str = cocaine::framework::unpack<std::string>(chunk, size);
 ```
 
 #####on_close
-Stream from the client closed. But the data to client still can be sent as back-to-client stream is opened. To get this stream you should use [parent](#parent) call.
+Stream from the client closed. But the data to client still can be sent as back-to-client stream is opened. To get this stream you should use [response](#response) call.
 
 
 ####Other functions
 
   * `parent` - a `custom_app` instance;
-  * `response` - back-to-client communication stream.
+  * `response` - back-to-client communication stream;
+  * `event` - name of handled event.
 
 #####parent
 Returns `custom_app` instance, that allows use any public data and methods of app class from the handler.
 
+```cpp
+custom_app& parent() const
+```
+
 #####response
 Returns pointer to the back-to-client stream object.
+
+```cpp
+std::shared_ptr response() const
+```
 
 Stream object has methods:
 
   * `error(int, std::string)` - to send an error to the client.
   * `close()` - to terminate connection with the client.
   * `write(<type>)` - to send data to the client. This method accepts as a parameter any type of objects that `msgpack` can treat and some more. Just try, if your type is not valid, program willn't be compiled.
+
+##### event
+Return the name of handled event.
+
+```cpp
+const std::string& event() const
+```
+
 
 ###App
 To be started as a Cocaine app program should have the next main function
@@ -184,13 +205,20 @@ Compile it with the command
 g++ calculator.cpp -o calculator -std=c++0x -lcocaine-framework -lmsgpack -lev -lboost_program_options -lboost_thread-mt -lboost_system
 ```
 
-Information about apps deployment to the cloud can be found in [app maintenance](app_maintenance.md) section.
+Information about apps deployment can be found in [app maintenance](app_maintenance.md) section.
 
 You can test this example with the [cocaine-tool](http://cocaine-tools.readthedocs.org/en/latest/tools.html) interface. Just don't forget that parameters of the call should be packed with the `msgpack` as described in corresponding [tutorial](tutorial_cplusplus.md).
 
-Also you should remember that Cocaine stops inactive (without of requests for a some time) apps and restart them on the next request. This means, that `value` in our example will be dropped to the initial state (`0`) if you will not work with it for some time.
+Also you should remember that Cocaine stops inactive (without of requests for a some time) apps and restart them on the next request. This means, that `value` in our example will be dropped to the initial state (`0`) if you will not work with it for some time. Moreover Cocaine can create several instances of app (under high load) and each of them will have it's own `value` and you don't know which you use.
 
 ##Client API
+  
+  * [General usage](#general-usage)
+  * [Generator](#generator)
+  * [App and services types](#app-and-services-types)
+  * [Example](#client-example)
+
+###General usage
 Communications between client app and services/apps looks like follows
 
 ![App <-> service communication](images/cplusplus_app_service_communication.png)
@@ -200,37 +228,39 @@ To use Cocaine services and apps the first you need to do is to create `service_
 ```cpp
 #include <cocaine/framework/services/app.hpp>
 
+namespace cf = cocaine::framework;
+
 int main(int argc, char *argv[]) {
-    auto manager = cocaine::framework::service_manager_t::create(cf::service_manager_t::endpoint_t("127.0.0.1", 10053));
+    auto manager = cf::service_manager_t::create(cf::service_manager_t::endpoint_t("127.0.0.1", 10053));
 
     //other code
 }
 ```
 `endpoint` is and address of Locator service.
 
-After creating `service_manager` client can get manager object for any app that it need
+After creating `service_manager` client can get managing object for any app that it need
 
 ```cpp
-auto app = manager->get_service<app_type>("any_app");
+auto service = manager->get_service<service_type>("any_service");
 ```
 
-There is no limitation on amount of services and apps used in the client, you can create as much manager objects of different and even the same type as you need.
+There is no limitation on amount of services and apps used in the client, you can create as much objects of different and even the same type as you need.
 
-`any_app` is a name of app that is defined in app manifest (check [app maintenance](app_maintenance.md) section of the document.)
+`any_service` is a name of service/app. Names of apps are specified by user at app upload.
 
-`app_type` is a name of app class type, for example `app_service_t` or `storage_service_t`. We will discuss it in [app types](#app-and-services-types) section a bit later.
+`service_type` is a name of service/app class type, for example `storage_service_t`. Apps has `app_service_t` type. We will discuss it in [service types](#app-and-services-types) section a bit later.
 
-Also `service_manager` has method `get_system_logger()` which allows get `logging` service manager object.
+Also `service_manager` has method `get_system_logger()` which allows get `logging` object.
 
 ```cpp
 std::shared_ptr<cocaine::framework::logger_t> log;
 log = d.service_manager()->get_system_logger();
 ```
 
-Manager of app in its turn allows calling app methods. Handle object should be created for each method. All further work with the app method will be processed by this handle. For ordinary app that we discussed so far it looks like follows
+Managing object of app in its turn allows calling app methods. Handle object returned by each method call. Handle intended to work with the results of the app method call.
 
 ```cpp
-auto g = app->enqueue("some_method", "some_data");
+auto g = service->enqueue("some_method", "some_data");
 ```
 
 Call of service manager object methods which have `service_t::call` semantics like `app->enqueue()` return [generator](#generator) as a handle object. 
@@ -239,8 +269,8 @@ All of the methods described in [app types section](#app-and-services-types) ret
 
 All methods of API raise exceptions on errors. Exceptions description can be found in `cocaine/framework/service_client/errors.hpp`, exceptions from `future`-object described in `cocaine/framework/service_client/future_errors.hpp`.
 
-##Generator
-Provides interface to client-server asynchronous communication protocol. Defined in `cocaine/framework/generator/generator.hpp`.
+###Generator
+Provides asynchronous interface to client-server communication protocol. Defined in `cocaine/framework/generator/generator.hpp`.
 
 **Methods**
 
@@ -261,7 +291,7 @@ Provides interface to client-server asynchronous communication protocol. Defined
 
 **Return value**
 
-All methods return object of class `future` which defined in `cocaine/framework/future/future.hpp` or raise an exception on errors. 
+Methods raise exceptions on errors.
 
 ####valid
 Check validity of generator. Generator becomes invalid after `then` or `map` call.
@@ -281,7 +311,7 @@ void wait() const;
 Waits for specified timeout. Returns on data or on timeout without any return codes. After return check data availability with the  `ready` or `empty` call.
 
 ```C++
- void wait_for(const std::chrono::duration<Rep, Period>& rel_time) const;
+void wait_for(const std::chrono::duration<Rep, Period>& rel_time) const;
 ```
 
 ####wait_until
@@ -322,7 +352,7 @@ bool closed();
 ```
 
 ####then
-Method binds callback which will be called on data from the remote end of stream. Also this call invalidates generator limiting its use until callback return. Callback is called on the first chunk of data, then `next()`-call is used to get data into the program.
+Method binds callback which will be called on data from the remote end of the stream. Also this call invalidates generator limiting its use until callback return. Callback is called on the first chunk of data, then `next()`-call is used to get data into the program.
 
 ```cpp
 template<class F> typename detail::future::unwrapped_result<F, generator<Args...>&>::type then(F&& callback)
@@ -398,7 +428,7 @@ find(const std::string& collection, const std::vector<std::string>& tags);
 
 |Parameter|Description|
 |---------|-----------|
-|collection|Cocaine stores its data in key-value storage by default. All data in the storage should be placed into the namespaces (it looks like a file system with one level of hierarchy). This parameter is a name of namespace.|
+|collection|Cocaine stores its data in key-value storage by default. All data in the storage should be placed into the namespaces (it looks like a file system with one level of hierarchy), `collection` is a designation of namespace.|
 |key|Key name.|
 |value|Value, which will be associated with the `key`.|
 |tags|Strings that can be used for additional value mark. `find`-method is designed for searching by tags and return all keys which have the same set of tags.|
@@ -416,12 +446,12 @@ This stub contains the only function `emit`, but it will be better to use macros
   * COCAINE_LOG_WARNING( log, ...)
   * COCAINE_LOG_ERROR( log, ...)
 
-`log` is a logging manager object. Other parameters are a string with the formatting markup and its parameters.
+`log` is an object obtained from `service_manager`. Other parameters are a string with the formatting markup and its parameters.
 
 Example of `logging_service_t` usage you can find in [C++ tutorial](tutorial_cplusplus.md)
 
 ###Client example
-Let's write a simple client to [calculator app example](#app-example). [Source of a client](code_examples/api_cplusplus_calculator_client.cpp).
+Let's write a simple client ([source](code_examples/api_cplusplus_calculator_client.cpp)) to [calculator app example](#app-example).
 
 ```cpp
 #include <cocaine/framework/services/app.hpp>
@@ -463,7 +493,6 @@ main(int argc, char *argv[]) {
     } catch(const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
-
 
     return 0;
 }

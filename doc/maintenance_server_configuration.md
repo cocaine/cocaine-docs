@@ -126,7 +126,7 @@ Defaults:
 
 ```
 "gateway": {
-    "type": "",
+    "type": "ipvs",
     "args": {
         "scheduler": "wlc",
         "weight": "1",
@@ -137,7 +137,7 @@ Defaults:
 
 | Parameter | Description |
 |-----------|-------------|
-| scheduler | It is the name of ipvs scheduler. You can get the list of them with the `man ipvsamd` command.|
+| scheduler | Name of ipvs scheduler. You can get the list of them with the `man ipvsamd` command.|
 | weight | Weight of the node. By default all Cocaine nodes have weight 1.|
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice.|
 
