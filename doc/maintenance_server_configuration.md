@@ -89,6 +89,7 @@ Defaults:
 "locator": {
     "hostname": "",
     "endpoint": "::",
+    "port": "10053",
     "port-range": ""
 }
 ```
@@ -97,7 +98,9 @@ Defaults:
 |-----------|-------------|
 | hostname | Local hostname which will be used for Locator publishing. Resolved with the system calls by default. |
 | endpoint | Bind address. Can be specified as a hostname or an address. Locator is bound to all interfaces by default.|
+| port | Port of the service. |
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice. |
+
 
 ##Network
 
@@ -126,7 +129,7 @@ Defaults:
 
 ```
 "gateway": {
-    "type": "ipvs",
+    "type": "",
     "args": {
         "scheduler": "wlc",
         "weight": "1",
@@ -137,7 +140,7 @@ Defaults:
 
 | Parameter | Description |
 |-----------|-------------|
-| scheduler | Name of ipvs scheduler. You can get the list of them with the `man ipvsamd` command.|
+| scheduler | It is the name of ipvs scheduler. You can get the list of them with the `man ipvsamd` command.|
 | weight | Weight of the node. By default all Cocaine nodes have weight 1.|
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice.|
 
@@ -167,14 +170,14 @@ Services are apps, that start with the Cocaine runtime instead of custom apps, t
 
 Cocaine has the next services by default that can be configured in this section:
 
-  *  `logging` - logger service. It can be used by custom apps and by the client to write logs.
-  *  `storage` - backend. It can be used by custom apps and by the clients to store data.
-  *  `node` - this service is designed to run custom apps.
-  *  `urlfetcher` - HTTP-client.
+  *  [logging](#logging) - logger service. It can be used by custom apps and by the client to write logs.
+  *  [storage](#storage) - backend. It can be used by custom apps and by the clients to store data.
+  *  [node](#node) - this service is designed to run custom apps.
+  *  [urlfetcher](#urlfetcher) - HTTP-client.
   
 You can write you own service. How you can do this described in corresponding part of the documentation.
 
-###Logging configuration
+###<a name="logging"></a>Logging configuration
 Service `logging` can use any logger configured in [loggers](#loggers) section. Name of logger is designated in `backend` argument like follows:
 
 ```
@@ -187,7 +190,7 @@ Service `logging` can use any logger configured in [loggers](#loggers) section. 
 ```
 By default (when `backend` is not configured) service use `core` logger.
 
-###Storage configuration
+###<a name="storage"></a>Storage configuration
 Service `storage` can use any backend configured in [storages](#storages) section. Name of backend is designated in `backend` argument like follows:
 
 ```
@@ -200,7 +203,7 @@ Service `storage` can use any backend configured in [storages](#storages) sectio
 ```
 By default (when `backend` is not configured) service use `core` backend.
 
-###Node configuration
+###<a name="node"></a>Node configuration
 Service `node` has the only parameter `runlist` that designates name of a list. 
 
 Runlist is a JSON file that contains the names of apps with their profiles in such a manner of:
@@ -220,7 +223,14 @@ Runlists are uploaded to the server with the command
 cocaine-tool runlist upload --name list_name --runlist path_to_JSON
 ```
 
-###Urlfetcher configuration
+The commands which used to work with runlist:
+  * `cocaine-tool runlist list` - shows uploaded runlists;
+  * `cocaine-tool runlist view --name list_name` - shows configuration context for runlist;
+  * `cocaine-tool runlist create --name list_name` - create runlist and upload it into the storage;
+  * `cocaine-tool runlist remove --name list_name` - remove runlist from the storage;
+  * `cocaine-tool runlist add-app --name list_name --app application_name --profile app_profile_name` - add specified application with profile to the runlist (existence of application or profile is not checked).
+
+###<a name="urlfetcher"></a>Urlfetcher configuration
 Should be configured as:
 
 ```
@@ -244,7 +254,7 @@ Cocaine `core`  backend is a filesystem, and its only parameter is a path to dat
 }
 ```
 
-It should present in any Cocaine configuration because it used by Cocaine core to store apps, manifests, profiles and other service information. Cocaine doesn’t use this storage as a service. This means that if we omit `core` description in `storages` Cocaine runtime will not start, but if we omit description of `storage` in `services` section only apps than use `storage` service will fail. For example, `cocaine-tool` will not upload custom app to the server if `storage` service is not configured in `services` section.
+It should present in any Cocaine configuration because it used by Cocaine core to store apps, manifests, profiles and other service information. Cocaine doesnï¿½t use this storage as a service. This means that if we omit `core` description in `storages` Cocaine runtime will not start, but if we omit description of `storage` in `services` section only apps than use `storage` service will fail. For example, `cocaine-tool` will not upload custom app to the server if `storage` service is not configured in `services` section.
 
 One more Cocaine storage is `cache`. It cann't be used with the `storage` services. It configuration looks like:
 

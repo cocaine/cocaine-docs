@@ -19,15 +19,16 @@ Documentation for Cocaine v0.11
     * [Java](api_java.md)
     * [Node.js](api_javascript.md)
     * [Go](api_go.md)
-  * Plugins
-    * Plugin API
-    * Core plugins
+  * Plugins development
   * [Cocaine tools command line interface](http://cocaine-tools.readthedocs.org/en/latest/)
-  * Core services
-    * Node
-    * Storage
-    * Logger
+  * Services and plugings
+    * Elasticsearch
     * Locator
+    * Logging
+    * Node
+    * MongoDB
+    * Storage
+    * Urlfetcher
   * Cocaine HTTP-proxy ([native proxy](https://github.com/andrusha97/cocaine-native-proxy/blob/master/README.md))
   * [Cocaine Vagrant](https://github.com/cocaine/cocaine-vagrant/blob/master/README.md)
   * Cocaine internals
