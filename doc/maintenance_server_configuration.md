@@ -89,7 +89,7 @@ Defaults:
 "locator": {
     "hostname": "",
     "endpoint": "::",
-    "port": "10053",
+    "port": 10053,
     "port-range": ""
 }
 ```
