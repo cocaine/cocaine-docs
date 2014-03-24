@@ -23,12 +23,18 @@ Documentation for Cocaine v0.11
   * [Cocaine tools command line interface](http://cocaine-tools.readthedocs.org/en/latest/)
   * [Services and plugins](services-and-plugins.md)
     * [Elasticsearch](services-and-plugins-elasticsearch.md)
-    * Locator
-    * Logging
-    * Node
-    * MongoDB
-    * Storage
-    * Urlfetch
+    * [Elliptics](services-and-plugins-elliptics.md)
+    * [Locator](services-and-plugins-locator.md)
+    * [Logging](services-and-plugins-logging.md)
+    * [Node](services-and-plugins-node.md)
+    * [MongoDB](services-and-plugins-mongodb.md)
+    * [Storage](services-and-plugins-storage.md)
+    * [Urlfetch](services-and-plugins-urlfetch.md)
+    * [Logstash](services-and-plugins-logstash.md)
+    * [App](services-and-plugins-app.md)
+    * [Ipvs](services-and-plugins-ipvs.md)
+    * [Chrono](services-and-plugins-chrono.md)
+    * [Docker](services-and-plugins-docker.md)
   * Cocaine HTTP-proxy ([native proxy](https://github.com/andrusha97/cocaine-native-proxy/blob/master/README.md))
   * [Cocaine Vagrant](https://github.com/cocaine/cocaine-vagrant/blob/master/README.md)
   * Cocaine internals

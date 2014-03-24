@@ -129,7 +129,7 @@ Defaults:
 
 ```
 "gateway": {
-    "type": "",
+    "type": "ipvs",
     "args": {
         "scheduler": "wlc",
         "weight": "1",
@@ -145,6 +145,7 @@ Defaults:
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice.|
 
 When using `ipvs`-gateway, you should be sure that `ip_vs` module is loaded into your Linux kernel.
+
 ##Services
 
 Defaults:
@@ -166,14 +167,14 @@ Defaults:
 }
 ```
 
-Services are apps, that start with the Cocaine runtime instead of custom apps, that run by the `node` service. 
+Services are apps, that start with the Cocaine runtime instead of custom apps, that run by the `node` service.
 
+Each service in this section must have unique name.
 Cocaine has the next services by default that can be configured in this section:
 
   *  [logging](#logging) - logger service. It can be used by custom apps and by the client to write logs.
   *  [storage](#storage) - backend. It can be used by custom apps and by the clients to store data.
   *  [node](#node) - this service is designed to run custom apps.
-  *  [urlfetcher](#urlfetcher) - HTTP-client.
   
 You can write you own service. How you can do this described in corresponding part of the documentation.
 
@@ -230,20 +231,10 @@ The commands which used to work with runlist:
   * `cocaine-tool runlist remove --name list_name` - remove runlist from the storage;
   * `cocaine-tool runlist add-app --name list_name --app application_name --profile app_profile_name` - add specified application with profile to the runlist (existence of application or profile is not checked).
 
-###<a name="urlfetcher"></a>Urlfetcher configuration
-Should be configured as:
-
-```
-"urlfetch": {
-    "type": "urlfetch"
-}
-```
-
-
 ##Storages
 This section describes parameters of backends for `storage` type of services. The Cocaine cache is also configured in this section.
 
-Cocaine `core`  backend is a filesystem, and its only parameter is a path to data. By default it configured as follows:
+Cocaine `core` is a backend, that will be used by default. After installation it configured with the type "files":
 
 ```
 "core": {
@@ -254,7 +245,7 @@ Cocaine `core`  backend is a filesystem, and its only parameter is a path to dat
 }
 ```
 
-It should present in any Cocaine configuration because it used by Cocaine core to store apps, manifests, profiles and other service information. Cocaine doesn�t use this storage as a service. This means that if we omit `core` description in `storages` Cocaine runtime will not start, but if we omit description of `storage` in `services` section only apps than use `storage` service will fail. For example, `cocaine-tool` will not upload custom app to the server if `storage` service is not configured in `services` section.
+It should present in any Cocaine configuration because it used by Cocaine core to store apps, manifests, profiles and other service information. Cocaine does not use this storage as a service. This means that if we omit `core` description in `storages` Cocaine runtime will not start, but if we omit description of `storage` in `services` section only apps than use `storage` service will fail. For example, `cocaine-tool` will not upload custom app to the server if `storage` service is not configured in `services` section.
 
 One more Cocaine storage is `cache`. It cann't be used with the `storage` services. It configuration looks like:
 

@@ -34,7 +34,6 @@ struct get_value_handler :
     void on_chunk(const char *chunk, size_t size);
 };
 
-
 //App class
 //========
 class calculator {

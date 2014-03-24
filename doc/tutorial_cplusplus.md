@@ -232,6 +232,7 @@ main(int argc, char *argv[]) {
 
 `g.next()` returns packed data, that we need to deserialize with the `msgpack`.
 
+
 Let's compile app and start it
 
 ```

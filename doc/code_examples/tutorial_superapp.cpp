@@ -53,7 +53,6 @@ void on_get::on_chunk(const char *chunk, size_t size) {
     gen.then(std::bind(&on_get::send, shared_from_this(), std::placeholders::_1));
 }
 
-
 int
 main(int argc, char *argv[]) {
     return cocaine::framework::run<superapp>(argc, argv);
