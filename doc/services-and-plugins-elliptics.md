@@ -3,7 +3,7 @@
 ##Description
 `Elliptics` plugin contains two components: service and backend. Backend can be used with the [core `storage` service](services-and-plugins-storage.md) but it has more functions then the core storage service provides for clients. If you want to use all of the resources of `elliptics` backend `elliptics` service should be used.
 
-This plugin is installed with [Elliptics](http://reverbrain.com). 
+This plugin is installed with [Elliptics](http://reverbrain.com).
 
 ##Handles
 
@@ -52,9 +52,13 @@ Result is programming language specific. Read the corresponding APIs description
     "backend_elliptics": {
         "type": "elliptics",
         "args": {
+            "nodes": [
+                "host:port:2",
+                "host:port:2"
+            ]
             "groups": [2],
         }
-    }  
+    }
 }
 ```
 
@@ -62,7 +66,9 @@ If you want Cocaine to use elliptics by default `storage_elliptics` should be re
 
 **Arguments of backed_elliptics**
 
-As an **args** for backend the next fields can be specified: `wait-timeout`, `check-timeout`, `io-thread-num`, `net-thread-num`, `flags`, `groups`, `remotes`.
+As an **args** for backend the next fields can be specified: `wait-timeout`, `check-timeout`, `io-thread-num`, `net-thread-num`, `flags`, `groups`, `remotes`, `nodes`.
+
+`nodes` describes endpoints where elliptics client could connect. If Elliptics **2.25** is used section is array of strings (i.e. ```"host:port:address_family"```), but in case of version **2.24**  map (i.e. ```{"host": port}```) has to be used.
 
 `flags` corresponds to flag parameter from [elliptics config core section](http://doc.reverbrain.com/elliptics:configuration#elliptics_core_section).
 
