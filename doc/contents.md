@@ -46,7 +46,7 @@ Documentation for Cocaine v0.11
     * [Slave protocol specification](https://github.com/cocaine/cocaine-core/wiki/protocol)
     * [Cocaine HTTP-proxy](cocaine_internals/cocaine_http_proxy.md)
     * [Frameworks (common words)](cocaine_internals/frameworks.md)
-    * [Node.js framework](cocaine_internals/nodejs-framework.md) ([details](nodejs-framework-overview.m))
+    * [Node.js framework](cocaine_internals/nodejs-framework.md) ([details](nodejs-framework-overview.md))
     * [Cocaine messages](cocaine_internals/cocaine_messages.md)
     * [Cocaine RPC](cocaine_internals/cocaine_rpc_protocol.md)
     * [Service resolving](cocaine_internals/service_resolving.md)
