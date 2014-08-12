@@ -43,7 +43,7 @@ Service is configured in `services` section of the configuration file. Type of s
 }
 ```
 
-As a backend (`storage_backend`) for this service any type of storages can be used, that support it internal interface. Nowdays it is a file storage and [`MongoDB` plugin](services-and-plugins-mongodb.md).
+As a backend (`storage_backend`) for this service any type of storages can be used, that support it internal interface. Nowdays it is a file storage and [`MongoDB` plugin](mongodb.md).
 
 File storage is configured like:
 
@@ -58,6 +58,6 @@ File storage is configured like:
 
 `path to storage` should exists and user running Cocaine should have enough rights to read/write to that `path`.
 
-[Elliptics plugin](services-and-plugins-elliptics.md) can be used with `storage` also but it has more functions and if you want to use all of them you should configure it with the original storage service with `elliptics` type.
+[Elliptics plugin](elliptics.md) can be used with `storage` also but it has more functions and if you want to use all of them you should configure it with the original storage service with `elliptics` type.
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

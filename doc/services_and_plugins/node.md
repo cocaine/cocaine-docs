@@ -3,7 +3,7 @@
 ##Description
 `Node` service is a core Cocaine service that is designed to manage apps running. It starts and stops apps.
 
-One instance of `Node` is started by `cocaine-runtime`. `Node` get name of runlist from the configuration file or use "default". Then it start all apps in runlist as separate [app services](services-and-plugins-app.md). If "default" runlist doesn't exist or empty service doesn't start anything.
+One instance of `Node` is started by `cocaine-runtime`. `Node` get name of runlist from the configuration file or use "default". Then it start all apps in runlist as separate [app services](app.md). If "default" runlist doesn't exist or empty service doesn't start anything.
 
 ##Handles
 
@@ -67,6 +67,6 @@ list()
 List of apps. This list includes all apps in all states, sleeping and working.
 
 ##Configuration
-Configuration parameters for `Node`-service are gathered in [node section](maintenance_server_configuration.md#node) of configuration guide.
+Configuration parameters for `Node`-service are gathered in [node section](../maintenance_server_configuration.md#node) of configuration guide.
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

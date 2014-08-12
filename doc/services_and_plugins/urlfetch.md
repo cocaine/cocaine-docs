@@ -36,7 +36,7 @@ On errors urlfetch closes stream to the client.
 
 ##Configuration
 
-Service configured in [`services` section](maintenance_server_configuration.md#services) of configuration files as follows
+Service configured in [`services` section](../maintenance_server_configuration.md#services) of configuration files as follows
 
 ```
 "urlfetch": {
@@ -49,4 +49,4 @@ Service configured in [`services` section](maintenance_server_configuration.md#s
 
 `connections-limit` regulates quantity of requests processed simultaneously. It can be set up to hundreds depending on the processing power of the host running Cocaine.
 
-[Back to Contents](#contents.md)
+[Back to Contents](../contents.md)

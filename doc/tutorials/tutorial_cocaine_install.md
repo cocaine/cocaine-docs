@@ -74,18 +74,13 @@ If you want to start it manually use the command
 $cocaine-runtime -c /etc/cocaine/cocaine-default.cfg
 ```
 
-If you need to build Cocaine components from sourced use corresponding [guide](maintenace_cocaine_deployment.md).
+If you need to build Cocaine components from sourced use corresponding [guide](../maintenace_cocaine_deployment.md).
 
-Description of `cocaine-runtime` configuration parameters you can find in [maintenance section](maintenance_server_configuration.md).
+Description of `cocaine-runtime` configuration parameters you can find in [maintenance section](../maintenance_server_configuration.md).
 
 While experimenting with Cocain it is usefull to toggle off caching. It can be done by deleting of `cache` configuration from the `storages` section of the configuration file.
 
 
-Now you can create your applications and run them under Cocaine. To do this, check tutorials:
-  * [Python](https://github.com/cocaine/cocaine-framework-python/wiki/Echo-application-example)
-  * [Node.js](https://github.com/cocaine/cocaine-framework-nodejs/blob/development/README.md)
-  * [C++](tutorial_cplusplus.md)
-  * Go
-  * Java
+Now you can create your applications and run them under Cocaine. To do this, use corresponding tutorials.
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

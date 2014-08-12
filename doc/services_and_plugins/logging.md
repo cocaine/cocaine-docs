@@ -26,7 +26,7 @@ Logging can use any backend which supports its interface. Cocaine provides three
 
   * `files`.
   * `syslog`.
-  * `logstash` as a separate [plugin](services-and-plugins-logstash.md).
+  * `logstash` as a separate [plugin](logstash.md).
 
 Cocaine configuration file should contain the sections looks like following:
 
@@ -65,6 +65,6 @@ Cocaine configuration file should contain the sections looks like following:
 }
 ```
 
-By default Cocaine use service `logging` with the syslog, configured as `core` backend. Example of it can be found in [configuration guide](maintenance_server_configuration.md).
+By default Cocaine use service `logging` with the syslog, configured as `core` backend. Example of it can be found in [configuration guide](../maintenance_server_configuration.md).
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

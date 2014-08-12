@@ -4,7 +4,7 @@
 
 Custom apps are started as services, each as a separate service. Client interface of apps should be called through the interface of `app` service which we consider in this section.
 
-![App interface](images/app_interface.png)
+![App interface](../images/app_interface.png)
 
 ##Handles
 
@@ -32,3 +32,5 @@ info()
 `enqueue` returns an arbitrary sequence of symbols, it is a result of app method call and should be treated in appliance with the return type of that method.
 
 `info` returns struct with information on app usage.
+
+[Back to Contents](../contents.md)
