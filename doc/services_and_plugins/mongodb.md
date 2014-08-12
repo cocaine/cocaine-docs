@@ -19,4 +19,4 @@ It is installed with the Cocaine plugins and configured in section `storages` of
 
 `uri` is a standard [MongoDB connection string](http://docs.mongodb.org/manual/reference/connection-string/).
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

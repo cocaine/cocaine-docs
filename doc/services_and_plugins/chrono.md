@@ -1,4 +1,4 @@
-#Service Chrono
+#Service Chrsono
 
 ##Description
 
@@ -76,10 +76,12 @@ restart(timer_id)
 |timer_id|Timer identificator.|
 
 ##Configuration
-Service should be configured in [services section](maintenance_server_configuration.md#services) of Cocaine configuration file as follows:
+Service should be configured in [services section](../maintenance_server_configuration.md#services) of Cocaine configuration file as follows:
 
 ```javascript
 "chrono" : {
 	"type" : "chrono"
 }
 ```
+
+[Back to Contents](../contents.md)

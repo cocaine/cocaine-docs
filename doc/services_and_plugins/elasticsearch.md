@@ -19,7 +19,7 @@ You can find description of elasticsearch methods in the original documentation 
   * **delete_index** corresponds to [Delete API](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html). Returns `status`. 
 
 ##Configuration
-Plugin configured in [`services` section](maintenance_server_configuration.md#services) of the Cocaine configuration file. By default it has the next look:
+Plugin configured in [`services` section](../maintenance_server_configuration.md#services) of the Cocaine configuration file. By default it has the next look:
 
 ```javascript
 "elasticsearch": {
@@ -33,4 +33,4 @@ Plugin configured in [`services` section](maintenance_server_configuration.md#se
 
 `host` and `port` are the parameters of entry point to the Elasticsearch.
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

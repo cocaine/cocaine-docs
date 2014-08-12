@@ -83,6 +83,6 @@ refresh(group_name)
 |group_name|Name of the group to refresh.|
 
 ##Configuration
-Service is configured as described in [Locator section](maintenance_server_configuration.md#locator) of the configuration guide.
+Service is configured as described in [Locator section](../maintenance_server_configuration.md#locator) of the configuration guide.
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)

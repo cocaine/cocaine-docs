@@ -1,13 +1,13 @@
 #Elliptics service and backend plugin
 
 ##Description
-`Elliptics` plugin contains two components: service and backend. Backend can be used with the [core `storage` service](services-and-plugins-storage.md) but it has more functions then the core storage service provides for clients. If you want to use all of the resources of `elliptics` backend `elliptics` service should be used.
+`Elliptics` plugin contains two components: service and backend. Backend can be used with the [core `storage` service](storage.md) but it has more functions then the core storage service provides for clients. If you want to use all of the resources of `elliptics` backend `elliptics` service should be used.
 
 This plugin is installed with [Elliptics](http://reverbrain.com).
 
 ##Handles
 
-Elliptics plugin adds the next handles to [storage](services-and-plugins-storage.md) interface:
+Elliptics plugin adds the next handles to [storage](storage.md) interface:
 
 | Handle | Description |
 |--------|-------------|
@@ -36,7 +36,7 @@ bulk_read(collection, keys)
 Result is programming language specific. Read the corresponding APIs descriptions.
 
 ##Configuration
-[Cocaine configuration file](maintenance_server_configuration.md) should contain the next sections:
+[Cocaine configuration file](../maintenance_server_configuration.md) should contain the next sections:
 
 ```javascript
 "services": {
@@ -78,4 +78,4 @@ As an **args** for backend the next fields can be specified: `wait-timeout`, `ch
 
 All other parameters can be found in the [client node configuration section](http://doc.reverbrain.com/elliptics:configuration#client_node_configuration) under original names.
 
-[Back to Contents](contents.md)
+[Back to Contents](../contents.md)
