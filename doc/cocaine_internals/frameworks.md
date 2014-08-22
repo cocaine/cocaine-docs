@@ -29,7 +29,7 @@ cocaine-runtime.
 Here are the requirements for any code that wants to implement behaving
 worker under cocaine-runtime management.
 
-1. Overview
+1. **Overview**.
 When spawned, slave process receives command-line arguments. It should
 connect to the right socket and to present itself with a certain
 handshake. Afterwards it should send a heartbeat message every time
@@ -44,7 +44,7 @@ processing its current sessions, it sends terminate message back to
 cocaine runtime, and cocaine-runtime sends worker process a TERM
 signal. 
 
-1. Start-up
+1. **Start-up**.
 On start-up, worker is called with the following command-line
 arguments:
 `--app <name_of_app>` name of app as it is known to cocaine-runtime
@@ -67,7 +67,7 @@ cocaine-runtime changes timeout for next `heartbeat` to
 `heartbeat-timeout`. When there's no next heartbeat within that time,
 cocaine-runtime considers worker to be stuck, and sends it TERM signal.
 
-1. Handling sessions
+1. **Handling sessions**.
 After the cocaine-runtime received first heartbeat from worker, it
 starts sending in user sessions. The incoming sessions looks like
 this: `[invoke, session_id, ["event-name"]]`, chunks, `<choke>`.

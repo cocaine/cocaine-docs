@@ -4,12 +4,12 @@ Cocaine RPC protocol uses [cocaine messages](cocaine_messages.md).
 
 Each service has a table of callable methods. Table for `storage`-service for example:
 
-|id|method name|
-|--|-----------|
-|0|read|
-|1|write|
-|2|find|
-|3|remove|
+| id | method name |
+|----|-------------|
+| 0 | read |
+| 1 | write |
+| 2 | find |
+| 3 | remove |
 
 To call `read` on the key `keyB` in `collectionA` caller required to get service endpoint, connect to it and send the next message:
 
@@ -40,15 +40,15 @@ In case of some error client gets:
 
 RPC identifiers:
 
-|id|name|
-|--|----|
-|0|handshake|
-|1|heartbeat|
-|2|terminate|
-|3|invoke|
-|4|chunk|
-|5|error|
-|6|choke|
+| id | name |
+|----|------|
+| 0 | handshake |
+| 1 | heartbeat |
+| 2 | terminate |
+| 3 | invoke |
+| 4 | chunk |
+| 5 | error |
+| 6 | choke |
 
 Each connection to service can serve for multiple sessions simultaneously. Identifier of closed session can be reused, but it doesn't look useful because `session_id` is a 64bit integer.
 
