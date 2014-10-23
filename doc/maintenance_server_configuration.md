@@ -172,9 +172,9 @@ Services are apps, that start with the Cocaine runtime instead of custom apps, t
 Each service in this section must have unique name.
 Cocaine has the next services by default that can be configured in this section:
 
-  *  [logging](#logging) - logger service. It can be used by custom apps and by the client to write logs.
-  *  [storage](#storage) - backend. It can be used by custom apps and by the clients to store data.
-  *  [node](#node) - this service is designed to run custom apps.
+  *  [logging](#logging-configuration) - logger service. It can be used by custom apps and by the client to write logs.
+  *  [storage](#storage-configuration) - backend. It can be used by custom apps and by the clients to store data.
+  *  [node](#node-configuration) - this service is designed to run custom apps.
   
 You can write you own service. How you can do this described in corresponding part of the documentation.
 
