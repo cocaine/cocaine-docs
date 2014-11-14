@@ -1,4 +1,4 @@
-﻿#Cocaine RPC protocol
+#Cocaine RPC protocol
 
 Cocaine RPC protocol uses [cocaine messages](cocaine_messages.md).
 
@@ -14,7 +14,7 @@ Each service has a table of callable methods. Table for `storage`-service for ex
 To call `read` on the key `keyB` in `collectionA` caller required to get service endpoint, connect to it and send the next message:
 
 ```
-[0,   // id метода read
+[0,   // read method id 
  123, // client-generated random id
  ["collectionA", "keyB"]] // arguments to read method
 ```

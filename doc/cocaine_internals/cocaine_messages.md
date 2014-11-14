@@ -2,7 +2,7 @@
 
 Messages are formed using [msgpack](http://msgpack.org/). A message is a tuple (array in msgpack terms) of: message_type_id (sometimes called method_id), session_id, and a tuple (array)  of arguments.
 
-`method_id`’s are specified in corresponding protocol's.
+`method_id`'s are specified in corresponding protocol's.
 
 `find`-method of `storage`-service will be called with the message:
 

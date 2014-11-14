@@ -1,30 +1,29 @@
+# Overview
 
-## Overview
+## C++ binding
 
-### C++ binding
-
-TBD later; see [JS layer](#js-layer) for now
+TBD later; see [JS layer](#js-wrappers-adapters-and-classes) for now
 
 * `include/`
-    * `nodejs/`
-      * `worker/`
-        * `io/`
-          * `socket.hpp`
-          * `async_connector.hpp`
-          * `readable_stream.hpp`
-          * `writable_stream.hpp`
-          * `channel.hpp`
-          * `channel_interface.hpp`
-          * `app_loop.hpp`
-          * `error_handler.hpp`
-          * `uv_event.hpp`
-          * `worker.hpp`
+  * `nodejs/`
+    * `worker/`
+      * `io/`
+        * `socket.hpp`
+        * `async_connector.hpp`
+        * `readable_stream.hpp`
+        * `writable_stream.hpp`
+        * `channel.hpp`
+        * `channel_interface.hpp`
+        * `app_loop.hpp`
+        * `error_handler.hpp`
+        * `uv_event.hpp`
+        * `worker.hpp`
   * `src/`
     * `node_addon.cpp`
     * `worker.cpp`
 
+## JS wrappers, adapters and classes
 
-### <a name="js-layer"></a>JS wrappers, adapters and classes
   * `lib/`
     * `./` two important things below:
       * `fsm.js` `FSM` metaclass, implements handlers switching, state
@@ -82,8 +81,4 @@ TBD later; see [JS layer](#js-layer) for now
          that when http-server consumes them, they taste like a regular
          tcp guy to her.
 
-
 For further details, see [detailed guide](nodejs-framework-detailed.md)
-
-
-

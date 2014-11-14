@@ -1,14 +1,13 @@
+# Nodejs Framework Detailed Guide
 
-## Nodejs Framework Detailed Guide
-
-### Overview
+## Overview
 
 To be a complying `Worker` or a `Client`, we need several things to
 do. These things are done in layers, separated by concerns they are
 dealing with.
 
 
-#### Channel
+### Channel
 The first is a transport layer, let's call it a channel. Its responsibility is
 to deal with transport-level issues: message framing and
 decoding. This is done in C++ binding. It connects to unix or tcp
@@ -19,7 +18,7 @@ when a complete message is received, pass it up to the upper
 layer. The same thing for messages coming downward from upper layer:
 it stores them to buffer, and feeds its buffer gradually to the socket.
 
-#### Worker, Client
+### Worker, Client
 
 The next layer's purpose is session handling. Over each channel,
 messages for many simultaneous sessions can flow, so this layer
@@ -43,13 +42,13 @@ stream message being sent.
 
 So this layer is implemented separately for `Client` and `Worker`.
 
-#### Client wrappers
+### Client wrappers
 
 Next layer provides interface to particular service. It wraps client
 sessions into method calls. Method API can be callback-based,
 promise-based, and other forms.
 
-#### Worker wrappers
+### Worker wrappers
 
 To facilitate http applications portability between cloud and regular
 environments, there is a layer, that emulates a behavior of incoming
@@ -58,9 +57,9 @@ server. For this layer to work, some support from http module is
 needed, so it works with slightly patched standard node.js http
 module.
 
-### Detailed guide
+## Detailed guide
 
-### Channel: C++ binding
+## Channel. C++ binding
 
 We won't go into much detail on low-level C++ binding in this guide,
 what we do is just describe its provided interface and capabilities.
@@ -70,9 +69,9 @@ Currently, channel binding is weirdly accessed with
 var binding = require("./Release/cocaine_framework").Communicator
 ```
 
-#### Methods
+### Methods
 
-##### Constructor
+#### Constructor
 ```
 new binding("1.2.3.4", 12345)
 new binding("::1", 12345)
@@ -85,7 +84,7 @@ When connection is ready, `on_connect` callback is called; on any
 error during connection `on_socket_error` callback is called with
 errno as an argument.
 
-##### send
+#### send
 ```
 handle.send(msgpack.pack([methodId, sessionId, [1, 2, "any", ["arguments"]]]))
 ```
@@ -98,21 +97,21 @@ It doesn't perform any checks, however some checks are performed by
 cocaine-runtime, and sending any other form data may result in
 an undefined behavior.
 
-##### close
+#### close
 ```
 handle.close()
 ```
 Closes underlying socket.
 
-#### Callbacks
+### Callbacks
 
-##### Socket callbacks
+#### Socket callbacks
 `handle.on_connect()` called after connection is established.
 `handle.on_socket_error(errno)` called on any connection error: either
 at the time of establishing a new connection or due to some network
 issues.
 
-##### Message callbacks, lifecycle
+#### Message callbacks, lifecycle
 
 `handle.on_heartbeat()` called when heartbeat message is received from
 cocaine-runtime.
@@ -122,10 +121,10 @@ received from cocaine-runtime, which indicates some terminate
 condition, usually it says "this instance of worker has to be shut
 down". `code` is either `normal` or `abnormal`, `message` is some
 human-readable string relevant to condition of termination. See
-[worker-lifecycle](technical-details.md#worker-lifecycle) for details
+[worker-lifecycle](worker_lifecycle.md) for details
 on termination conditions.
 
-##### Message callbacks, RPC
+#### Message callbacks, RPC
 `handle.on_invoke(sid, eventName)` is called on invoke message, which
 is sent to indicate the beginning of an incoming stream. `eventName`
 is handle name to be used. It's an event name used by `Worker` class
@@ -142,9 +141,13 @@ termination of incoming stream.
 error condition at the time of stream being produced.
 
 
-### JS layer
+## JS layer
 
-## `lib/fsm.js`
+### FSM
+
+```
+lib/fsm.js
+```
 
 `FSM` is a quite simple builder, used to implement `BaseService` and
 `Worker`. Its main parts are `FSMPrototype` object and `define`
@@ -446,7 +449,11 @@ NodeJS 0.10 provides more elaborate streams classes. Session2 supports
 Streams2 interface. It supports both Streams1 interface and Sreams2
 interface.
 
-### `lib/worker/worker.js`
+### Worker
+
+```
+lib/worker/worker.js
+```
 
 `Worker` is implemented as FSM with a following state diagram:
 ```
@@ -548,5 +555,3 @@ W.on("http", function(S){
 })
 
 ```
-
-
