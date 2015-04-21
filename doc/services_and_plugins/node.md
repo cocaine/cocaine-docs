@@ -67,6 +67,6 @@ list()
 List of apps. This list includes all apps in all states, sleeping and working.
 
 ##Configuration
-Configuration parameters for `Node`-service are gathered in [node section](../maintenance_server_configuration.md#node) of configuration guide.
+Configuration parameters for `Node`-service are gathered in [node section](../maintenance_server_configuration.md#node-configuration) of configuration guide.
 
 [Back to Contents](../contents.md)

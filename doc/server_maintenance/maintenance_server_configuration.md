@@ -172,13 +172,13 @@ Services are apps, that start with the Cocaine runtime instead of custom apps, t
 Each service in this section must have unique name.
 Cocaine has the next services by default that can be configured in this section:
 
-  *  [logging](#logging) - logger service. It can be used by custom apps and by the client to write logs.
-  *  [storage](#storage) - backend. It can be used by custom apps and by the clients to store data.
-  *  [node](#node) - this service is designed to run custom apps.
+  *  [logging](#logging-configuration) - logger service. It can be used by custom apps and by the client to write logs.
+  *  [storage](#storage-configuration) - backend. It can be used by custom apps and by the clients to store data.
+  *  [node](#node-configuration) - this service is designed to run custom apps.
   
 You can write you own service. How you can do this described in corresponding part of the documentation.
 
-###<a name="logging"></a>Logging configuration
+###Logging configuration
 Service `logging` can use any logger configured in [loggers](#loggers) section. Name of logger is designated in `backend` argument like follows:
 
 ```
@@ -191,7 +191,7 @@ Service `logging` can use any logger configured in [loggers](#loggers) section. 
 ```
 By default (when `backend` is not configured) service use `core` logger.
 
-###<a name="storage"></a>Storage configuration
+###Storage configuration
 Service `storage` can use any backend configured in [storages](#storages) section. Name of backend is designated in `backend` argument like follows:
 
 ```
@@ -204,7 +204,7 @@ Service `storage` can use any backend configured in [storages](#storages) sectio
 ```
 By default (when `backend` is not configured) service use `core` backend.
 
-###<a name="node"></a>Node configuration
+###Node configuration
 Service `node` has the only parameter `runlist` that designates name of a list. 
 
 Runlist is a JSON file that contains the names of apps with their profiles in such a manner of:

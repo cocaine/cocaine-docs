@@ -1,3 +1,4 @@
+#App monitoring
 Unfortunately possibilities of apps monitoring are not so big.
 
 You can test if an app is running with the [`cocaine-tool`](http://cocaine-tools.readthedocs.org/en/latest/tools.html). To do it use the command

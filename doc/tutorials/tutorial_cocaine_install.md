@@ -74,7 +74,7 @@ If you want to start it manually use the command
 $cocaine-runtime -c /etc/cocaine/cocaine-default.cfg
 ```
 
-If you need to build Cocaine components from sourced use corresponding [guide](../maintenace_cocaine_deployment.md).
+If you need to build Cocaine components from sources use corresponding [guide](../maintenance_server_deployment.md).
 
 Description of `cocaine-runtime` configuration parameters you can find in [maintenance section](../maintenance_server_configuration.md).
 

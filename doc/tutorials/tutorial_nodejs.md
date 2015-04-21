@@ -240,6 +240,6 @@ Server.listen(handle)
 
 ```
 
-# Uploading your app to the cloud
+## Uploading your app to the cloud
 
 See [nodejs-running-app.md] for instructions.

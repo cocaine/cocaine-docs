@@ -1,7 +1,6 @@
-﻿
 # App lifecycle processes
 
-This section describes the processes that occur when app works oк someone works with app.
+This section describes the processes that occur when app works or someone works with app.
 
 ## Regular Deployment Process
 
@@ -108,11 +107,11 @@ No started app check.
 
 When Docker used as isolation mechanism app with it environment are stored in Docker repository. Manifest and profile of app play the role as with another isolate type.
 
-#### upload
+#### app upload
 
 When `cocaine-tool` used there is no difference in comparison with the described above procedure, just app container is stored in Docker repository.
 
-#### start
+#### app start
 
 The peculiarity of this process is in `docker_isolate::spool`. Instead of using `storage` `spool` calls `docker::pull <registry>/<app-name>` where `registry` is got from profile.
 
@@ -122,6 +121,3 @@ Differences from earlier described `isolate::process` are not big. `docker_isola
 
 #### stop, remove
 This operations has no differences with described above.
-
-
-

@@ -1,4 +1,6 @@
-﻿Let's create a simple C++ cocaine service and simple C++ client for it.
+#C++ service and client app
+
+Let's create a simple C++ cocaine service and simple C++ client for it.
 
 Before you start, read the [Cocaine installation tutorial](tutorial_cocaine_install.md).
 
@@ -14,7 +16,7 @@ cocaine-tool call storage write "'supernamespace', 'superkey', 'Data for superte
 
 You should get `None` as a result.
 
-#Our cocaine service app
+##Our cocaine service app
 Start your program with the next code:
 
 ```
@@ -110,7 +112,7 @@ g++ service_main.cpp -o superapp -std=c++0x -lcocaine-framework -lmsgpack -lev -
 
 Now we are ready to deploy our app into the cloud and use it there.
 
-#Deployment
+##Deployment
 To deploy service into the cloud we should create tarball, write manifest and upload both of them to the Cocaine server.
 
 Tarball.
@@ -191,10 +193,10 @@ If all that we did before was correctly finished we will see something like:
 ```
 Here we can see that our `superapp` has `"state":"running"`.
 
-#Client app
+##Client app
 We have two ways to call `get` method of our service: `cocaine-tool` and client-side API.
 
-##cocaine-tool
+###cocaine-tool
 The next command call `get`-method with the parameter. Parameter as it was mentioned above should be packed with the `msgpack`.
 
 ```
@@ -202,7 +204,7 @@ x=$(python -c "import msgpack; print msgpack.packb('superkey')")
 cocaine-tool call superapp enqueue "'get', '$x'"
 ```
 
-##Client-side API
+###Client-side API
 At the client side we should create the `service_manager` object which is used to communicate with services in Cocaine cloud.
 
 ```

@@ -1,4 +1,3 @@
-
 # NodeJS framework
 
 ## Requirements and design goals
@@ -49,7 +48,7 @@ Then, there is a `send` method, which assumes a `(sid, buffer)` as
 its arguments. Use it to send any type of message to any of session
 within the channel.
 
-Lastly, there's a family of callbacks(with their signatures):
+Lastly, there is a family of callbacks(with their signatures):
 ```
 on_chunk(session_id, buffer)
 on_choke(session_id)
@@ -60,7 +59,7 @@ on_heartbeat()
 When incoming message is completely decoded, the corresponding
 callback is called.
 
-The `on_socket_error` callback is called with system `errno` as it's
+The `on_socket_error` callback is called with system `errno` as its
 only argument in case of any error on channel socket.
 
 `close` method is used to close socket descriptor and detach event
@@ -68,7 +67,7 @@ loop listeners.
 
 ## Services
 
-There's a class `BaseService`. It manages communication with generic
+There is a class `BaseService`. It manages communication with generic
 service: connecting to a service, handling connection errors. 
 As its crucial part it includes _handle member, referencing the
 instance of Channel class. `BaseService` manages callbacks attached to
@@ -146,10 +145,7 @@ state is closed.
 
 Logger is a customized descendant of `Service` class. As a service it
 provides emit method, which is used to emit logger messages. For
-developer’s convenience, logger provides methods `error`, `info` and
+developer's convenience, logger provides methods `error`, `info` and
 other corresponding logging levels. On connection, it is supposed to
 get its logging level with  `verbosity` method, and not send messages
 with verbosity greater than returned level.
-
-
-

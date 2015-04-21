@@ -1,6 +1,6 @@
 #Elasticsearch service plugin
 ##Description
-This service is a Cocaine frontend to [elasticsearch](http://www.elasticsearch.org/), it doesn't extends or modify interface or an original engine of elastisearch. This plugin can’t be used as a backend for Cocaine storage service.
+This service is a Cocaine frontend to [elasticsearch](http://www.elasticsearch.org/), it doesn't extends or modify interface or an original engine of elastisearch. This plugin can't be used as a backend for Cocaine storage service.
 
 ##Handles
 

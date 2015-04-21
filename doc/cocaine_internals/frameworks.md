@@ -1,4 +1,3 @@
-
 # Framework
 
 ## What it does and helps to do
@@ -29,7 +28,8 @@ cocaine-runtime.
 Here are the requirements for any code that wants to implement behaving
 worker under cocaine-runtime management.
 
-1. **Overview**.
+**Overview**
+
 When spawned, slave process receives command-line arguments. It should
 connect to the right socket and to present itself with a certain
 handshake. Afterwards it should send a heartbeat message every time
@@ -44,7 +44,8 @@ processing its current sessions, it sends terminate message back to
 cocaine runtime, and cocaine-runtime sends worker process a TERM
 signal. 
 
-1. **Start-up**.
+**Start-up**
+
 On start-up, worker is called with the following command-line
 arguments:
 `--app <name_of_app>` name of app as it is known to cocaine-runtime
@@ -67,7 +68,8 @@ cocaine-runtime changes timeout for next `heartbeat` to
 `heartbeat-timeout`. When there's no next heartbeat within that time,
 cocaine-runtime considers worker to be stuck, and sends it TERM signal.
 
-1. **Handling sessions**.
+**Handling sessions**
+
 After the cocaine-runtime received first heartbeat from worker, it
 starts sending in user sessions. The incoming sessions looks like
 this: `[invoke, session_id, ["event-name"]]`, chunks, `<choke>`.
@@ -75,10 +77,10 @@ Currently, when app incoming sessions originate from the app's dedicated
 invocation service, there will be at most one chunk in incoming
 stream.
 
-##### example
+### example
 
 In case of http requests encoded, binary payload of the incoming chunk
-looks like this:
+looks as following:
 ```
 [method, version, uri, [[header, value], [header, value]], <binary-body]
 ```
@@ -89,7 +91,11 @@ response chunk stream payloads would look like this:
 <binary-body-slice>
 ```
 
-1. Handling heartbeats
+Any session received by the worker, under normal conditions, should be
+responded with stream, possibly containing only error message.
+
+**Handling heartbeats**
+
 Heartbeats used to let cocaine-runtime and worker know to each other that they are
 online and operating normally.
 First heartbeat message to runtime should be sent no earlier than
@@ -102,7 +108,8 @@ within certain interval, it should consider itself abandoned for some
 reason, it should complete any transactions that it can complete on
 its own, and terminate.
 
-1. Handling and signaling termination
+**Handling and signaling termination**
+
 When cocaine-runtime decides to shut down worker instance for this or
 that reason, it sends worker a terminate message. The reason and code
 are specified within the message. Worker, given such a message on
@@ -111,8 +118,4 @@ message back, and exit with normal status.
 When worker decides to exit for some reason, it should send terminate
 message to cocaine-runtime with code and message explaining why it
 terminates, and exit with normal or abnormal status.
-
-Any session received by the worker, under normal conditions, should be
-responded with stream, possibly containing only error message.
-
 

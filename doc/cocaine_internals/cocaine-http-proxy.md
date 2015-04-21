@@ -1,4 +1,3 @@
-
 # cocaine-http-proxy
 
 Cocaine http proxy is a program that listens for incoming http

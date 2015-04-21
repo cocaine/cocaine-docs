@@ -1,7 +1,12 @@
 Documentation for Cocaine v0.11
 
 #Contents
-  * [General info](general_info.md)
+  * General info
+    * [Common description](http://api.yandex.com/cocaine/)
+    * [The same, but other words](https://github.com/cocaine/cocaine-core/blob/master/README.md)
+    * [Some more words about Cocaine architecture](https://github.com/cocaine/cocaine-core/wiki/architecture)
+    * [Actor Model in Cocaine](general_info/general_info_actor_model.md)
+    * [Services and Apps](general_info/general_info_services_and_apps.md)
   * Tutorials
     * [Cocaine install](tutorials/tutorial_cocaine_install.md)
     * [Python service and client app](https://github.com/cocaine/cocaine-framework-python/wiki/Echo-application-example)
@@ -21,10 +26,7 @@ Documentation for Cocaine v0.11
   * [API](api.md)
     * [C++](api_cplusplus.md)
     * [Python](https://cocaine.readthedocs.org/en/latest/)
-    * [Java](api_java.md)
-    * [Node.js](api_javascript.md)
-    * [Go](api_go.md)
-  * Plugins development
+    * [Java framework](https://github.com/cocaine/cocaine-framework-java/blob/master/README.md)
   * [Cocaine tools command line interface](http://cocaine-tools.readthedocs.org/en/latest/)
   * [Services and plugins](services_and_plugins/services-and-plugins.md)
     * [Elasticsearch](services_and_plugins/elasticsearch.md)

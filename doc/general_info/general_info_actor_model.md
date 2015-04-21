@@ -1,4 +1,3 @@
-
 # Actor Model in Cocaine
 
 Actor model assumes that every item of a system is an actor.
@@ -7,8 +6,7 @@ According to the model, actors have following properties.
 
 1. Actor has an address.
 1. Actor can spawn another actor
-1. Actor can send and receive messages. Actor sends messages only to
-actors, whose address it knows.
+1. Actor can send and receive messages. Actor sends messages only to actors, whose address it knows.
 
 More about Actor model you can read in [wiki](http://en.wikipedia.org/wiki/Actor_model).
 

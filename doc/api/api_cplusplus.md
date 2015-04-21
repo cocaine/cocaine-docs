@@ -2,11 +2,11 @@
 
 Logically API is divided in two parts:
 
-  * [API for Cocaine apps writing](#api-for-writing-cocaine-apps);
+  * [API for Cocaine apps writing](#api-for-cocaine-apps-writing);
   * [API for Cocaine services and apps usage (maintenance)](#client-api).
   
 ##API for Cocaine apps writing
-C++ Cocaine app is an executable that will be started by `Node` service as a separate process. It has no access to internal Cocaine context unlike the Cocaine services that run inside of it. Cocaine apps can use services and other apps using [Client API](#client-api). How to write the Cocaine services you can read in [Plugins](plugins.md) section of documentation.
+C++ Cocaine app is an executable that will be started by `Node` service as a separate process. It has no access to internal Cocaine context unlike the Cocaine services that run inside of it. Cocaine apps can use services and other apps using [Client API](#client-api). How to write the Cocaine services you can read in Plugins section of documentation.
 
 General approach to develop apps is to implement some handler classes and register them by `dispatch_t::on()`-call.
 
@@ -128,7 +128,7 @@ public:
 
 
 ###App example
-Following app is a simple calculator ([source](code_examples/api_cplusplus_calculator_app.cpp)). It have handles `add`, `subtract` and `get_value` with the corresponding meaning.
+Following app is a simple calculator ([source](https://github.com/BayoNet/cocaine-docs/blob/v0.11/doc/code_examples/api_cplusplus_calculator_app.cpp)). It have handles `add`, `subtract` and `get_value` with the corresponding meaning.
 
 ```
 #include <cocaine/framework/dispatch.hpp>
@@ -207,7 +207,7 @@ g++ calculator.cpp -o calculator -std=c++0x -lcocaine-framework -lmsgpack -lev -
 
 Information about apps deployment can be found in [app maintenance](app_maintenance.md) section.
 
-You can test this example with the [cocaine-tool](http://cocaine-tools.readthedocs.org/en/latest/tools.html) interface. Just don't forget that parameters of the call should be packed with the `msgpack` as described in corresponding [tutorial](tutorial_cplusplus.md).
+You can test this example with the [cocaine-tool](http://cocaine-tools.readthedocs.org/en/latest/tools.html) interface. Just don't forget that parameters of the call should be packed with the `msgpack` as described in corresponding [tutorial](tutorials/tutorial_cplusplus.md).
 
 Also you should remember that Cocaine stops inactive (without of requests for a some time) apps and restart them on the next request. This means, that `value` in our example will be dropped to the initial state (`0`) if you will not work with it for some time. Moreover Cocaine can create several instances of app (under high load) and each of them will have it's own `value` and you don't know which you use.
 
@@ -364,7 +364,7 @@ template<class F> typename detail::future::unwrapped_result<F, generator<Args...
 std::bind(&some_class::callback_function, shared_from_this(), std::placeholders::_1)
 ```
 
-Also callback should have a reference to the generator as a parameter. Generator should be the same type as an owner of `then`. Example of usage can be found in [C++ tutorial](tutorial_cplusplus.md).
+Also callback should have a reference to the generator as a parameter. Generator should be the same type as an owner of `then`. Example of usage can be found in [C++ tutorial](tutorials/tutorial_cplusplus.md).
 
 ####map
 It works like `then`, but runs callback for each chunk of data.
@@ -395,7 +395,7 @@ All calls from the client are provided by `service_t` template class, this inter
 |[storage_service_t](#storage_service_t) |Stub for `storage` service.|
 |[logging_service_t](#logging_service_t) |Stub for `logging` service. Special macros are defined also to make logging process more transparent.|
 
-If you need simplified interface for another service types, you should get it from the developer of the service or you can [write it by yourself](plugings_api.md).
+If you need simplified interface for another service types, you should get it from the developer of the service or you can write it by yourself.
 
 ####app_service_t
 This stub has only method `enqueue` with 2 parameters:
@@ -433,7 +433,7 @@ find(const std::string& collection, const std::vector<std::string>& tags);
 |value|Value, which will be associated with the `key`.|
 |tags|Strings that can be used for additional value mark. `find`-method is designed for searching by tags and return all keys which have the same set of tags.|
 
-Example of `storage_service_t` usage you can find in [C++ tutorial](tutorial_cplusplus.md).
+Example of `storage_service_t` usage you can find in [C++ tutorial](tutorials/tutorial_cplusplus.md).
 
 `read` return `std::string`
 `find` return `std::vector<std::string>`
@@ -448,10 +448,10 @@ This stub contains the only function `emit`, but it will be better to use macros
 
 `log` is an object obtained from `service_manager`. Other parameters are a string with the formatting markup and its parameters.
 
-Example of `logging_service_t` usage you can find in [C++ tutorial](tutorial_cplusplus.md)
+Example of `logging_service_t` usage you can find in [C++ tutorial](tutorials/tutorial_cplusplus.md)
 
 ###Client example
-Let's write a simple client ([source](code_examples/api_cplusplus_calculator_client.cpp)) to [calculator app example](#app-example).
+Let's write a simple client ([source](https://github.com/BayoNet/cocaine-docs/blob/v0.11/doc/code_examples/api_cplusplus_calculator_app.cpp)) to [calculator app example](#app-example).
 
 ```cpp
 #include <cocaine/framework/services/app.hpp>
