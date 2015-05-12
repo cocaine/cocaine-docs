@@ -52,13 +52,46 @@ Let's consider some examples of protocol descriptions to understand how to write
 For example, when you resolve ``Storage`` service ``Locator`` returns the following string:
 
 ```
- {0:["read", {}, {0:["value", {}], 1:["error", {}]}], 1:["write", {}, {0:["value", {}], 1:["error", {}]}], 2:["remove", {}, {0:["value", {}], 1:["error", {}]}], 3:["find", {}, {0:["value", {}], 1:["error", {}]}]}
+{
+  0: [
+    "read", 
+    {}, 
+    {
+      0: ["value", {}], 
+      1: ["error", {}]
+    }
+  ], 
+  1: [
+    "write", 
+    {}, 
+    {
+      0: ["value", {}], 
+      1: ["error", {}]
+    }
+  ], 
+  2: [
+    "remove", 
+    {}, 
+    {
+      0: ["value", {}], 
+      1: ["error", {}]
+    }
+  ], 
+  3: [
+    "find", 
+    {}, 
+    {
+      0: ["value", {}], 
+      1: ["error", {}]
+    }
+  ]
+}
 ```
 
 We see that transaction for message 0 ("read") is the array:
 
 ```
-["read",{},{0:["value",{}],1:["error",{}]}]
+["read", {}, {0: ["value", {}], 1: ["error", {}]}]
 ```
 
 Let's apply structure of ``[Transaction description]`` to the array:
@@ -76,8 +109,22 @@ Each ``read`` should be in a separate channel.
 
 Let's look at more complicated example. Consider ``enqueue`` transaction of ``App``:
 
-```
-{0:["enqueue", {0:["write",None],1:["error",{}],2:["close",{}]}, {0:["write",None],1:["error",{}],2:["close",{}]}]}
+```json
+{
+  0: [
+    "enqueue",
+    {
+      0: ["write", None],
+      1: ["error", {}],
+      2: ["close", {}]
+    }, 
+    {
+      0: ["write", None],
+      1: ["error", {}],
+      2: ["close", {}]
+    }
+  ]
+}
 ```
 
 In this example we see a new type of definition ``0:["write",None]``. This is a cycle. Service or an app can send ``write`` as much times as it need. It is a good way to implement streaming of data.
