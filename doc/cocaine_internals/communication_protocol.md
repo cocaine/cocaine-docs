@@ -36,11 +36,9 @@ Communication transactions of Cocaine protocol can be described in the following
 { message_type_1:[transaction description], message_type_2:[transaction description], ...}
 ```
 
-It is like a JSON object. ``Locator`` returns description of any service protocol in this form.
+``Locator`` returns description of any service protocol in this form.
 
-Keys are the numbers of methods in service dispatch table.
-
-Transaction description consists of 3 parts:
+It is like a JSON object. Keys are the numbers of methods in service dispatch table. ``[Transaction description]`` consists of 3 parts:
   * Message name. It is just a human readable name of message with ``message_type_ID`` that service waits at the beginning of transaction;
   * Messages that service waits after the first message;
   * Messages that service sends.
@@ -51,20 +49,19 @@ Let's consider some examples of protocol descriptions to understand how to write
 
 ### Reading the protocol of ``Storage`` service
 
-!!!!!!!!!!!!!!! Вставить сюда реальный пример для Storage. Команду в локатор и полную строку.!!!!!!!
-
-For example, when you resolve ``Storage`` service ``Locator`` returns object of the following form:
+For example, when you resolve ``Storage`` service ``Locator`` returns the following string:
 
 ```
-{0:["read",{},{0:["value",{}],1:["error",{}]}], 1:["another handle", ...], ...}
+ {0:["read", {}, {0:["value", {}], 1:["error", {}]}], 1:["write", {}, {0:["value", {}], 1:["error", {}]}], 2:["remove", {}, {0:["value", {}], 1:["error", {}]}], 3:["find", {}, {0:["value", {}], 1:["error", {}]}]}
 ```
 
-We see that transaction for message 0 ("read") is the following array:
+We see that transaction for message 0 ("read") is the array:
 
 ```
 ["read",{},{0:["value",{}],1:["error",{}]}]
 ```
 
+Let's apply structure of ``[Transaction description]`` to the array:
   * ``read`` is the name of the first message in transaction.
   * ``{}`` is a section of messages that ``Storage`` waits after ``read``. We see no messages but the braces show us that we can use the same syntax as whole transaction uses. ``{}`` is an empty subtransaction with the same ``channel ID`` as the main one.
   * ``{0:["value",{}],1:["error",{}]}`` is the subtransaction object that describes messages which ``Storage`` will send as an answer on ``read``. ``Storage`` should use one of these messages obligatory and we see that it will not wait answer for any of them. These messages, ``value`` and ``error``, are terminating.
@@ -87,7 +84,7 @@ In this example we see a new type of definition ``0:["write",None]``. This is a 
 
 Rules for request and for answer messages are the same ``{0:["write",None],1:["error",{}],2:["close",{}]}``. ``App`` client can send ``write`` multiple times and stop streaming with ``error`` or ``close``. ``App`` service can do the same.
 
-The whole picture of ``enqueue`` protocol is follows:
+The whole picture of ``enqueue`` protocol is following:
 
 If ``App`` gets ``enqueue`` message it waits for any number of ``write`` messages and can send any number of ``write`` messages itself in the same channel. If ``App`` wants to stop its streaming it should use "error" or ``close`` messages. Application from opposite side of connection should do the same if it wants to stop streaming.
 
