@@ -16,17 +16,17 @@ Cocaine uses ``msgpack``.
 Cocaine's ``msgpack`` message has the following structure:
 
 ```
-[channel ID (int), message type ID (int), [message specific arguments], message specific data... ]
+[channel ID (int), message type ID (int), [message payload], reserved for future usage... ]
 ```
 
 |Field|Description|
 |-----------|-----------|
 |``channel ID``|  Each physical connection provides multiple logical channels. Use this ID to split these channels. Each communication transaction should be processed in a separate channel. |
 |``message type ID``| Each message type has its name (``chunk``, ``write`` ...) which has corresponding ID in RPC table. RPC table for the service you can get from ``Locator``. |
-|``message specific arguments``| Any message specific agruments.|
-|``message specific data``| Any message data.|
+|``message payload``| Any payload dedicated to request, represented as msgpack object |
+|``reserved for future usage``| fileds with index 4 and greater are reserved for future usage. They probably will contain message headers and related stuff |
 
-Developer of a service may specify any arguments and data for each message type.
+Developer of a service may specify any possible arguments(payload) for each message type.
 
 ##Communication transactions
 
