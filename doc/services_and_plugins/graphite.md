@@ -1,18 +1,49 @@
-# Graphite
+# Service Graphite
 ## Description
- It's a service for sending metrics to graphite (http://graphite.wikidot.com/). It provides metrics aggregation and bulk send via text protocol.
+Service aggregates metrics for [Graphite](http://graphite.wikidot.com/) and sends it via text protocol.
 
-## API
-  * `send_one(string metric_name, double metric_value, optional uint metric_timestamp) -> void` - sends one metric
-  * `send_bulk( array of (string metric_name, double metric_value, optional uint metric_timestamp) ) -> void` - sends pack of metrics.
- Where:
-  * metric_name - string, metric name, prefixed by configurable value in cocaine.
-  * metric_value - double, metric value.
-  * metric_timestamp - metric timestamp. If omitted - current timestamp will be used in cocaine.
+## Handles
+| Handle | Description |
+|--------|-------------|
+|send_one|Send one metric.|
+|send_bulk|Send pack of metrics.|
+
+```
+send_one(string metric_name, double metric_value, optional uint metric_timestamp)
+send_bulk( array of (string metric_name, double metric_value, optional uint metric_timestamp) )
+```
+
+### Parameters
+|Parameter|Type|Description|
+|---------|----|-----------|
+|metric_name|String|Metric name. Cocaine adds a prefix to the name. Set prefix in service configuration.|
+|metric_value|Double|Metric value.|
+|metric_timestamp|Integer|Metric timestamp. Cocaine uses current time if parameter omitted.|
 
 ## Configuration
-  * host - graphite host. Default 127.0.0.1
-  * port - graphite port. Default 2003
-  * flush_interval_ms - How often metrics are flushed to graphite (in ms).
-  * prefix - prefix added to metrics. Default "cocaine"
-  * max_queue_size - Maximum number of elements in queue after which metrics are flushed. Default 1000
+Service should be configured in [services section](../maintenance_server_configuration.md#services) of Cocaine configuration file as follows:  
+
+```
+"graphite": {
+    "type": "graphite",
+    "args":{
+        "host": "127.0.0.1",
+        "port": 2003,
+        "flush_interval_ms": 1000,
+        "prefix": "cocaine",
+        "max_queue_size": "1000"
+    }
+}
+```
+
+###Arguments
+
+|Argument|Description|
+|--------|-----------|
+|host|Graphite host. "127.0.0.1" by default.|
+|port|Graphite port. "2003" by default.|
+|flush_interval_ms|Interval in milliseconds between sending to Graphite.|
+|prefix|Prefix. Cocaine automatically add prefix to metric names. "cocaine" by default.|
+|max_queue_size|Maximum number of elements in queue. Service sends metrics to Graphite by interval (``flush_interval_ms``) or when size of queue amounts to ``max_queue_size``. "1000" by default.|
+
+[Back to Contents](../contents.md)
