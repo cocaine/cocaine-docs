@@ -41,9 +41,9 @@ Service should be configured in [services section](../maintenance_server_configu
 |Argument|Description|
 |--------|-----------|
 |host|Graphite host. "127.0.0.1" by default.|
-|port|Graphite port. "2003" by default.|
+|port|Graphite port. 2003 by default.|
 |flush_interval_ms|Interval in milliseconds between sending to Graphite.|
-|prefix|Prefix. Cocaine automatically add prefix to metric names. "cocaine" by default.|
-|max_queue_size|Maximum number of elements in queue. Service sends metrics to Graphite by interval (``flush_interval_ms``) or when size of queue amounts to ``max_queue_size``. "1000" by default.|
+|prefix|Prefix. Cocaine automatically adds prefix to metric names. "cocaine" by default.|
+|max_queue_size|Maximum number of elements in queue. Service sends metrics to Graphite with interval (``flush_interval_ms``) or when size of queue amounts to ``max_queue_size``. 1000 by default.|
 
 [Back to Contents](../contents.md)

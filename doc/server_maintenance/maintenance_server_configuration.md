@@ -114,7 +114,7 @@ Possible fields:
 | endpoint | Bind address. Can be specified as a hostname or an address. Locator is bound to all interfaces by default.|
 | port | Port of the service. |
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice. |
-| args | Additional parameters of configuration. [Cluster configuration](#cluster_configuration). [Gateway configuration](#gateway_configuration)|
+| args | Additional parameters of configuration. [Cluster configuration](#cluster-configuration). [Gateway configuration](#gateway-configuration)|
 
 ###Cluster configuration
 
