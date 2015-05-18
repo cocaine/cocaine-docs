@@ -31,6 +31,6 @@ The first message of communication transaction should be "invoke" it starts data
 |(ID) Message  |Channel|args                          |Description|
 |--------------|-------|------------------------------|-----------|
 |(3) invoke    |Any    | (string) event               | ``event`` is an app handle. Cocaine sends it to the worker to start communication transaction. Worker should be ready to receive "chunk", "error" and "choke" in the started channel, the worker also can send these message to Cocaine.|
-|(4) chunk     |Any    | (byte string) data           |Data message. Can contain any data that can be passed to ``msgpack``.|
+|(4) chunk     |Any    | (byte string) data           |Data message. Can contain any data suitable for ``msgpack``.|
 |(5) error     |Any    | (int) errno, (string) reason |Error message. Contains identifier of error and its description.|
 |(6) choke     |Any    |                              |Close channel message. Can be sent from both ends of channel. Both directions of a channel are treated as independent, thus if Cocaine and worker wants to stop all communications "choke" should be sent by both sides.|

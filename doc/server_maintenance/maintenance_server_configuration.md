@@ -1,24 +1,24 @@
 #Server configuration
 
-The default configuration file of the Cocaine runtime after the installation is [/etc/cocaine/cocaine-default.conf](https://github.com/cocaine/cocaine-core/blob/v0.12/debian/cocaine-runtime.conf). It has JSON format. The most parameters that you can specify there just replace default values.
+The default configuration file of the Cocaine runtime after the installation is [/etc/cocaine/cocaine-runtime.conf](https://github.com/cocaine/cocaine-core/blob/v0.12/debian/cocaine-runtime.conf). It has JSON format. The most parameters that you can specify there just replace default values.
 
 Let's consider questions of network communications in Cocaine.
 
 ![Cocaine network](../images/network_configuration.png)
 
-Cocaine cloud consists of multiply nodes combined to one multicast group. Gateways are the entry points of a cloud and they are the balancers of load. Any node of a cloud can be a gateway, even all of them. If you want to create just one node there is no need to configure gateway. 
+Cocaine cloud consists of multiply nodes combined to cluster wich can be configured as a multicast group. Gateways are the entry points of a cloud and they are the balancers of load. Any node of a cloud can be a gateway, even all of them. If you want to create just one node there is no need to configure gateway. 
 
 How nodes learn about each other and how do they know which services are run on each? There is a Locator core service runs on each node for this purpose.
 
 You should use [locator](#locator) and [network](#network) sections of configuration file to manipulate with aspects of Cocaine network.
 
-Other configuration options regulate such parameters of node like [running services](#services), [storage](#storages) and [logger](#loggers) components description and a [paths](#paths) settings.
+Other configuration options regulate such parameters of node like [running services](#services), [storage](#storages) and [logging](#logging) components description and a [paths](#paths) settings.
 
 The minimalistic working configuration looks like follows:
 
 ```json
 {
-    "version": 2,
+    "version": 3,
     "services": {
         "logging": {
             "type": "logging"
@@ -35,13 +35,22 @@ The minimalistic working configuration looks like follows:
             }
         },
     },
-    "loggers": {
-        "core": {
-            "type": "syslog",
-            "args": {
-                "identity": "cocaine",
-                "verbosity": "info"
-            }
+    "logging": {
+        "core" : {
+            "loggers": [
+                {
+                    "formatter": {
+                        "type": "string",
+                        "pattern": "[%(timestamp)s] [%(severity)s]: %(message)s %(...:[:])s"
+                    },
+                    "sink": {
+                        "type": "syslog",
+                        "identity": "cocaine"
+                    }
+                }
+            ],
+            "timestamp": "%Y-%m-%d %H:%M:%S.%f",
+            "verbosity": "info"
         }
     }
 }
@@ -51,7 +60,7 @@ It's enough for Lonely Cloud node start and serve.
 
 You need to **remember** that the [paths](#paths) used by default should exist and be available for changes by user who runs node.
 
-The first parameter of the file is `"version": 2` it should be used as is, no changes.
+The first parameter of the file is `"version": 3` it should be used as is, no changes.
 
 Sections of the configuration file:
 
@@ -62,7 +71,7 @@ Sections of the configuration file:
 | [network](#network) | Parameters, that makes a cloud from nodes. |
 | [services](#services) | Declaration of used services, custom and core. |
 | [storages](#storages) | Configuration of backends for Cocaine storage service. |
-| [loggers](#loggers) | Logger services configuration. |
+| [logging](#logging) | Logger services configuration. |
 
 ##Paths
 
@@ -180,29 +189,6 @@ How to configure ``Locator`` to use ``Unicorn`` service you can read in [service
 
 Gateway configuration consists only of type that can be "adhoc" or "ipvs".
 
-##Network
-
-Possible subsections:
-
-```
-"network": {
-    "group": "",
-    "gateway": {
-        "type": "",
-        "args": { ... }
-    }
-}
-```
-
-| Parameter | Description |
-|-----------|-------------|
-| group | Multicast address which will be used for Cocaine node self-publishing. It is not required for the standalone nodes. |
-| gateway | Gateway is an entry point into the cloud for the clients. It can be of 2 **types**: `adhoc` without any **args**, and `ipvs` with some of them. |
-
-`adhoc` gateway balances load randomly, maybe it's not the most intelligent algorithm, but it works quite well.
-
-`ipvs` has the next parameters:
-
 Defaults:
 
 ```
@@ -223,6 +209,27 @@ Defaults:
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice.|
 
 When using `ipvs`-gateway, you should be sure that `ip_vs` module is loaded into your Linux kernel.
+
+##Network
+
+Possible subsections:
+
+```
+"network": {
+    "pinned": {},
+    "endpoint" : "localhost:1234",
+    "pool" : 10 ,
+    "hostname" : "unique_name"
+}
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| pinned    | You can use this parameter to define ports for core services. For example, ``"pinned": {"locator": 10053}`` forces ``locator`` to listen the port number 10053.|
+| endpoint  | Forces Cocaine runtime to listen specified ``host`` and ``port``.|
+| pool      | Number of processing threads. |
+| hostname  | The name that Cocaine uses for self identification. If ``hostname`` is not specified Cocaine tries to resolve hostname by system call. |
+
 
 ##Services
 
@@ -257,17 +264,14 @@ Cocaine has the next services by default that can be configured in this section:
 You can write you own service. How you can do this described in corresponding part of the documentation.
 
 ###Logging configuration
-Service `logging` can use any logger configured in [loggers](#loggers) section. Name of logger is designated in `backend` argument like follows:
+
+Service [logging]() is configured in [logging](#logging) section.
 
 ```
 "logging": {
     "type": "logging",
-    "args": {
-        "backend": "core"
-    }
 },
 ```
-By default (when `backend` is not configured) service use `core` logger.
 
 ###Storage configuration
 Service `storage` can use any backend configured in [storages](#storages) section. Name of backend is designated in `backend` argument like follows:
@@ -340,19 +344,28 @@ The only parameter of `cache` is `path` to the cache data. Cache is used to stor
 
 In case when you just start experiments with the Cocaine, delete this section from the configuration file if it is there. When it is not configured Cocaine doesn't use cache.
 
-##Loggers
-This section contains description of logger configuration.
+##Logging
+This section contains description of logger configuration. Cocaine provides logging with ``logging`` service. Read the [description of this service](services_and_plugins/logging.md) to learn how to configure it.
 
 Default configuration:
 
 ```
-"loggers": {
-    "core": {
-        "type": "syslog",
-        "args": {
-            "identity": "cocaine",
-            "verbosity": "info"
-        }
+"logging": {
+    "core" : {
+        "loggers": [
+            {
+                "formatter": {
+                    "type": "string",
+                    "pattern": "[%(timestamp)s] [%(severity)s]: %(message)s %(...:[:])s"
+                },
+                "sink": {
+                    "type": "syslog",
+                    "identity": "cocaine"
+                }
+            }
+        ],
+        "timestamp": "%Y-%m-%d %H:%M:%S.%f",
+        "verbosity": "info"
     }
 }
 ```
