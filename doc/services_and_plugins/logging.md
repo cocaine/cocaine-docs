@@ -7,7 +7,7 @@ Service ``logging`` provides interface for logging through the Cocaine. It uses 
 ##Handles
 
 ```
-emit(level, issuer, message, attributes)
+emit(level, issuer, message, optional<attributes>)
 ```
 
 Emits message to the log.
@@ -16,8 +16,8 @@ Emits message to the log.
 
 |**Parameter**|**Description**|
 |-------------|---------------|
-|level|Level of logging. Number from 0 to 3, INFO=0, WARNING=1, ERROR=3, DEBUG=4.|
-|issuer|Name of message author. Any string that identifies issuer of the message.|
+|level|Level of logging. Number from 0 to 3, DEBUG=0, INFO=1, WARNING=2, ERROR=3|
+|source|Name of message author. Any string that identifies issuer of the message.|
 |message|Log message.|
 |attributes| Optional parameter which can be omitted. It is a JSON object of an arbitrary form. It is not usefull for the most cases but if you use for example Elasticsearch as a backend, you can get additional abilities with this parameter.|
 
