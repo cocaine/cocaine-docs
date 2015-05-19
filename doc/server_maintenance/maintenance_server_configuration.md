@@ -220,6 +220,7 @@ Possible subsections:
     "endpoint" : "localhost:1234",
     "pool" : 10 ,
     "hostname" : "unique_name"
+    "shared": [32700, 33000]
 }
 ```
 
@@ -229,6 +230,7 @@ Possible subsections:
 | endpoint  | Forces Cocaine runtime to listen specified ``host`` and ``port``.|
 | pool      | Number of processing threads. |
 | hostname  | The name that Cocaine uses for self identification. If ``hostname`` is not specified Cocaine tries to resolve hostname by system call. |
+| shared | Range of ports which are used by services to bind. Otherwise OS selects a port |
 
 
 ##Services
