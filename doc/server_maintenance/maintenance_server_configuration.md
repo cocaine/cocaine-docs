@@ -208,7 +208,7 @@ Defaults:
 | weight | Weight of the node. By default all Cocaine nodes have weight 1.|
 | port-range | Range of ports available for services binding. If not specified, services are bound to any free port of operating system choice.|
 
-When using `ipvs`-gateway, you should be sure that `ip_vs` module is loaded into your Linux kernel.
+When using `ipvs`-gateway, you should be sure that `ip_vs` module is loaded into your Linux kernel. Also `port-range` option must be non empty. So an empty port range is prohibited by a configuration check in `ipvs` plugin. Creating an LVS on `0` port makes a host not accept any network connections.
 
 ##Network
 
