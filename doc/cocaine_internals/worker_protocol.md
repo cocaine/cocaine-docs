@@ -1,4 +1,4 @@
-#Worker protocol.
+#Worker protocol
 
 This protocol provides communication between Cocaine ``App`` service and a worker runs a custom app.
 
@@ -34,3 +34,5 @@ The first message of communication transaction should be "invoke" it starts data
 |(4) chunk     |Any    | (byte string) data           |Data message. Can contain any data suitable for ``msgpack``.|
 |(5) error     |Any    | (int) errno, (string) reason |Error message. Contains identifier of error and its description.|
 |(6) choke     |Any    |                              |Close channel message. Can be sent from both ends of channel. Both directions of a channel are treated as independent, thus if Cocaine and worker wants to stop all communications "choke" should be sent by both sides.|
+
+[Back to Contents](../contents.md)
