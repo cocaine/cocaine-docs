@@ -18,7 +18,8 @@ Service does not support some features of ZooKeeper. For example, you cannot sto
 | [children_subscribe](#children_subscribe) | Subscribe for node children. |
 | [close](#close) | Stop communication with ``Unicorn`` service. |
 | [create](#create) | Create node. |
-| [del](#del) | Delete a node. |
+| [remove](#remove) | Delete a node. |
+| [del](#del) | Delete a node. Deprecated, because "del" is a reserved word in Python |
 | [get](#get) | Get value of a node. |
 | [increment](#increment) | Increment a node's data by the specified value.|
 | [lock](#lock) | Create a lock on a specified node. |
@@ -202,13 +203,32 @@ Messages:
   * "error" with an error description. Errors are unrecoverable and communication with ``Unicorn`` will be stopped.
 
 ## Configuration
-Service should be configured in [services section](../maintenance_server_configuration.md#services) of Cocaine configuration file as follows:  
+Unicorn backends should be configured in "unicorns" section of cocaine.conf file. Each instance has a name, to refer to in other config sections as key and object consisting of type ("zookeeper" is the only one implementation in this plugin) and type specific args as value. Zookeeper backend has the following args:
+  * endpoints - endpoints for zookeeper. Array of objects with "host" and "port".
+  * prefix is a namespace appended to all paths in unicorn, so it should start from '/'. 
+  * recv_timeout_ms is a timeout for receive operation, passed to zookeeper c library as is.
+Example:  
+
+```
+"unicorns": {
+ "core": {
+  "type": "zookeeper",
+  "args":{
+   "endpoints": [{"host":"localhost","port":2181}, ...],
+   "prefix": "/prefix",
+   "recv_timeout_ms": 5000
+  }
+ }, ...
+}
+```
+
+Unicorn service should be configured in [services section](../maintenance_server_configuration.md#services) of Cocaine configuration file via preconfigured backends as follows:  
 
 ```
 "unicorn": {
     "type": "unicorn",
     "args":{
-        "endpoints": [{"host":"localhost","port":2181}, ...]
+        "backend": "core"
     }
 }
 ```
@@ -245,7 +265,7 @@ To use ``Unicorn`` service for ``Locator`` discovery purpose administrator shoul
         "cluster": {
             "type": "unicorn",
             "args": {
-                "endpoints": [{"host":"localhost","port":2181}, ...]
+                "backend": "core"
                 "retry_interval": 1,
                 "check_interval": 60
             }
@@ -258,7 +278,7 @@ To use ``Unicorn`` service for ``Locator`` discovery purpose administrator shoul
 
 |Argument|Description|
 |--------|-----------|
-|endpoints|Array of ZooKeeper endpoints. ``Unicorn`` use localhost:2181 by default.|
+|backend|Preconfigured backend of unicorn from "unicorns" section of cocaine configuration file.|
 |retry_interval|Interval to retry in case of failure. 1 second by default.|
 |check_interval|Check interval of regular order. 60 seconds by default.|
 
