@@ -25,7 +25,7 @@ The minimalistic working configuration looks like follows:
         },
         "storage": {
             "type": "storage"
-        },
+        }
     },
     "storages": {
         "core": {
@@ -33,7 +33,7 @@ The minimalistic working configuration looks like follows:
             "args": {
                 "path": "/var/lib/cocaine"
             }
-        },
+        }
     },
     "loggers": {
         "core": {
